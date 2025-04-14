@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Zeris72/ZIO'
+                git url: 'https://github.com/Zeris72/ZIO', branch: 'main'
             }
         }
 
