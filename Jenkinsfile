@@ -19,7 +19,7 @@ pipeline {
         
         stage('Publish Test Results') {
             steps {
-                junit allowEmptyResults: true, testResults: '**/TEST-*.xml'
+                junit 'test-reports/test-report.xml'
             }
         }
         stage('SonarQube Analysis') {
@@ -31,11 +31,7 @@ pipeline {
 }
     }
 }
-        stage('Publish Test Results') {
-    steps {
-        junit 'test-reports/test-report.xml'
-            }
-        }
+        
     }
 
     post {
