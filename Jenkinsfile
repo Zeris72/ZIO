@@ -37,11 +37,15 @@ pipeline {
     }
 
     post {
-        success {
-            echo '✅ Build zakończony sukcesem!'
-        }
-        failure {
-            echo '❌ Coś poszło nie tak.'
-        }
+    success {
+        mail to: 'uterek58@gmail.com',
+             subject: "✅ Build SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+             body: "Build zakończył się sukcesem.\n\nZobacz: ${env.BUILD_URL}"
     }
+    failure {
+        mail to: 'uterek58@gmail.com',
+             subject: "❌ Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+             body: "Build się nie powiódł.\n\nZobacz logi: ${env.BUILD_URL}"
+    }
+}
 }
