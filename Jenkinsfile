@@ -24,14 +24,11 @@ pipeline {
         }
         stage('SonarQube Analysis') {
     steps {
-        withSonarQubeEnv('MySonar') {
-            sh '''
-                sonar-scanner \
-                  -Dsonar.projectKey=ZIO \
-                  -Dsonar.sources=src \
-                  -Dsonar.java.binaries=out
-            '''
-        }
+       withSonarQubeEnv('MySonar') {
+    withEnv(["PATH+SONAR=${tool 'sonar-scanner'}/bin"]) {
+        sh 'sonar-scanner -Dsonar.projectKey=ZIO -Dsonar.sources=src -Dsonar.java.binaries=out'
+    }
+}
     }
 }
     }
