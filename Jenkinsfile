@@ -22,6 +22,18 @@ pipeline {
                 junit allowEmptyResults: true, testResults: '**/TEST-*.xml'
             }
         }
+        stage('SonarQube Analysis') {
+    steps {
+        withSonarQubeEnv('MySonar') {
+            sh '''
+                sonar-scanner \
+                  -Dsonar.projectKey=ZIO \
+                  -Dsonar.sources=src \
+                  -Dsonar.java.binaries=out
+            '''
+        }
+    }
+}
     }
 
     post {
