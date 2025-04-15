@@ -25,10 +25,18 @@ pipeline {
         stage('SonarQube Analysis') {
     steps {
        withSonarQubeEnv('MySonar') {
-    withEnv(["PATH+SONAR=${tool 'sonar-scanner'}/bin"]) {
-        sh 'sonar-scanner -Dsonar.projectKey=ZIO -Dsonar.sources=src -Dsonar.java.binaries=out'
+            withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                withEnv(["PATH+SONAR=${tool 'sonar-scanner'}/bin"]) {
+                    sh '''
+                        sonar-scanner \
+                          -Dsonar.projectKey=ZIO \
+                          -Dsonar.sources=src \
+                          -Dsonar.java.binaries=out \
+                          -Dsonar.login=$SONAR_TOKEN
+                    '''
+                }
+        }
     }
-}
     }
 }
         
