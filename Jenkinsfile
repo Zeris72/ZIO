@@ -16,6 +16,12 @@ pipeline {
                 '''
             }
         }
+        
+        stage('Publish Test Results') {
+            steps {
+                junit allowEmptyResults: true, testResults: '**/TEST-*.xml'
+            }
+        }
     }
 
     post {
